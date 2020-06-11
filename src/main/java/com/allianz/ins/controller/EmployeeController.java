@@ -109,9 +109,4 @@ public class EmployeeController {
 		}
 	}
 	
-	@RequestMapping(value = "/hello", method = RequestMethod.GET)
-	public String createAuthenticationToken() throws Exception {
-	
-		return "hello";
-	}
 }
