@@ -15,6 +15,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.allianz.ins.model.Employee;
+import com.allianz.ins.service.EmployeeService;
 import com.allianz.ins.service.MyUserDetailsService;
 import com.allianz.ins.util.JWTUtil;
 
@@ -25,11 +27,10 @@ import io.jsonwebtoken.ExpiredJwtException;
 public class JWTRequestFilter extends OncePerRequestFilter{
 
 	@Autowired
-	private MyUserDetailsService myUserDetailsService;
-
-
-	@Autowired
 	private JWTUtil JWTUtil;
+	
+	@Autowired
+	EmployeeService employeeService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -47,6 +48,7 @@ public class JWTRequestFilter extends OncePerRequestFilter{
 
 			try {
 				username = JWTUtil.getUsernameFromToken(jwtToken);
+				System.out.println("username in token: "+username);
 			} catch (IllegalArgumentException e) {
 				System.out.println("Unable to get JWT Token");
 			} catch (ExpiredJwtException e) {
@@ -57,13 +59,14 @@ public class JWTRequestFilter extends OncePerRequestFilter{
 		}
 		// Once we get the token validate it.
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			UserDetails userDetails = this.myUserDetailsService.loadUserByUsername(username);
+		
+			Employee employee = employeeService.getEmployee(username);
 			// if token is valid configure Spring Security to manually set
 			// authentication
-			if (JWTUtil.validateToken(jwtToken, userDetails)) {
+			if (JWTUtil.validateToken(jwtToken, employee)) {
 				
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-						userDetails, null, userDetails.getAuthorities());
+						employee, null, null);
 				usernamePasswordAuthenticationToken
 				.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				// After setting the Authentication in the context, we specify

@@ -22,15 +22,10 @@ import com.allianz.ins.service.EmployeeService;
 import com.allianz.ins.service.MyUserDetailsService;
 import com.allianz.ins.util.JWTUtil;
 
+import antlr.StringUtils;
+
 @RestController
 public class EmployeeController {
-
-	@Autowired
-	private AuthenticationManager authenticationManager;
-
-
-	@Autowired
-	private MyUserDetailsService myUserDetailsService;
 
 	@Autowired
 	EmployeeService employeeService;
@@ -38,35 +33,50 @@ public class EmployeeController {
 	@Autowired
 	private JWTUtil JWTUtil;
 
+	/*
+	 * This method is used to first do the authentication and
+	 * then generate a jwt token and return in response
+	 */
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
 		System.out.println("Inside authenticate controller");
-		//Validate User credentials
-		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		String token="";
 
-		//get User credentials
-		final UserDetails userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+		if(authenticationRequest != null && authenticationRequest.getUsername() != null) {
 
-		//generate JWT token using User credentials
-		final String token = JWTUtil.generateToken(userDetails);
-		
+			//get User credentials
+			Employee employee = employeeService.getEmployee(authenticationRequest.getUsername());
+
+			//Validate User credentials
+			if(employee != null && 
+					authenticationRequest.getUsername().equals(employee.getEmployeename())&&
+					authenticationRequest.getPassword().equals(employee.getPassword()))	{
+
+				//generate JWT token using EmployeeName
+				token = JWTUtil.generateToken(employee.getEmployeename());
+			}
+		}
+
 		return ResponseEntity.ok(new AuthenticationResponse(token));
 	}
 	
+	
+
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ResponseEntity<?> saveEmployee(@RequestBody Employee employee) throws Exception {
 
-		System.out.println("IN: saveEmployee: ");
+		System.out.println("IN: saveEmployee");
 		
 		employeeService.addEmployee(employee);
 		return ResponseEntity.ok().build();
 	}
 	
+	
 	@RequestMapping(value = "/getAllEmployees", method = RequestMethod.GET)
 	public ResponseEntity<?> getAllEmployees() throws Exception {
 
-		System.out.println("IN: getAllEmployees: ");
+		System.out.println("IN: getAllEmployees");
 		
 		List<Employee> employees = employeeService.getAllEmployees();
 		return ResponseEntity.ok(employees);
@@ -76,9 +86,9 @@ public class EmployeeController {
 	public ResponseEntity<?> getEmployee(@PathVariable String employeeName) throws Exception {
 
 		System.out.println("IN: getEmployee controller: "+employeeName);
-		
+
 		Employee employee = employeeService.getEmployee(employeeName);
-		
+
 		System.out.println("employee: "+employee);
 		return ResponseEntity.ok(employee);
 	}
@@ -99,14 +109,5 @@ public class EmployeeController {
 		return ResponseEntity.ok(status);
 	}
 	
-	private void authenticate(String username, String password) throws Exception {
-		try {
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-		} catch (DisabledException e) {
-			throw new Exception("USER_DISABLED", e);
-		} catch (BadCredentialsException e) {
-			throw new Exception("INVALID_CREDENTIALS", e);
-		}
-	}
 	
 }

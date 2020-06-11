@@ -25,9 +25,6 @@ import com.allianz.ins.service.MyUserDetailsService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 
-	@Autowired
-	private MyUserDetailsService myUserDetailsService;
-
 
 	@Autowired
 	private JWTRequestFilter jwtRequestFilter;
@@ -37,24 +34,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	
 
-//	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//// configure AuthenticationManager so that it knows from where to load
-//// user for matching credentials
-//// Use BCryptPasswordEncoder
-//auth.userDetailsService(myUserDetailsService).passwordEncoder(passwordEncoder());
-//}
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-		auth.userDetailsService(myUserDetailsService);
-	}
-
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception{
-		// We don't need CSRF for this example
+		// We don't need CSRF
 		httpSecurity.csrf().disable()
-		// dont authenticate this particular request
+		// dont authenticate these particular request
 		.authorizeRequests().antMatchers("/authenticate", "/h2-console/**","/v2/api-docs",
                 "/configuration/ui",
                 "/swagger-resources/**",
@@ -71,16 +55,5 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 		httpSecurity.headers().frameOptions().disable();
 	}
-	@Bean
-	public PasswordEncoder  passwordEncoder(){
 
-		return  NoOpPasswordEncoder.getInstance();
-
-	}
-
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
 }

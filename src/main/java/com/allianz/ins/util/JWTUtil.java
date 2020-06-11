@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import com.allianz.ins.model.Employee;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -17,13 +20,16 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JWTUtil {
 
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
-	private String secret = "unique";
+	
+
+	@Value("${jwt.secret}")
+	private String secret ;
 
 	
 	// generate token for user
-	public String generateToken(UserDetails userDetails) {
+	public String generateToken(String employeeName) {
 		Map<String, Object> claims = new HashMap<>();
-		return doGenerateToken(claims, userDetails.getUsername());
+		return doGenerateToken(claims, employeeName);
 	}
 
 	// while creating the token -
@@ -41,9 +47,10 @@ public class JWTUtil {
 	
 	
 	// validate token
-	public Boolean validateToken(String token, UserDetails userDetails) {
-		final String username = getUsernameFromToken(token);
-		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+	public Boolean validateToken(String token, Employee employee) {
+	
+		// if employee object exist, means emp name in token and DB is same.
+		return (employee!= null && !isTokenExpired(token));
 	}
 
 	// retrieve username from jwt token
