@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.7.RELEASE</version>
+		<version>2.3.0.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -22,7 +22,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<dependency>
+  		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
@@ -50,6 +50,23 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.197</version><!--$NO-MVN-MAN-VER$-->
+			
+		</dependency>
+
 	</dependencies>
 
 	<build>

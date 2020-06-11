@@ -55,7 +55,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 		// We don't need CSRF for this example
 		httpSecurity.csrf().disable()
 		// dont authenticate this particular request
-		.authorizeRequests().antMatchers("/authenticate").permitAll().
+		.authorizeRequests().antMatchers("/authenticate", "/h2-console/**").permitAll().
 		// all other requests need to be authenticated
 		anyRequest().authenticated().and().
 		// make sure we use stateless session; session won't be used to
@@ -64,6 +64,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+		httpSecurity.headers().frameOptions().disable();
 	}
 	@Bean
 	public PasswordEncoder  passwordEncoder(){
