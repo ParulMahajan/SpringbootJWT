@@ -3,6 +3,7 @@ package com.allianz.ins.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -63,13 +64,14 @@ public class EmployeeController {
 	
 	
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, 
+	        produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> saveEmployee(@RequestBody Employee employee) throws Exception {
 
 		System.out.println("IN: saveEmployee");
 		
-		employeeService.addEmployee(employee);
-		return ResponseEntity.ok().build();
+		Employee savedEmployee = employeeService.addEmployee(employee);
+		return ResponseEntity.ok(savedEmployee);
 	}
 	
 	
@@ -103,7 +105,7 @@ public class EmployeeController {
 	
 	@RequestMapping(value = "/updateEmployee", method = RequestMethod.POST)
 	public ResponseEntity<?> updateEmployee(@RequestBody Employee employee) throws Exception {
-
+ 
 		System.out.println("IN: updateEmployee: ");
 		int status = employeeService.updateEmployee(employee);
 		return ResponseEntity.ok(status);

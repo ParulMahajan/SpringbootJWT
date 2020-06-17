@@ -18,6 +18,9 @@ public class Employee {
 	private String email;
 	private String mobile;
 
+	public Employee() {
+		// TODO Auto-generated constructor stub
+	}
 	public String getEmployeename() {
 		return employeename;
 	}

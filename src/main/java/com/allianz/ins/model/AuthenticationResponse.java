@@ -2,8 +2,11 @@ package com.allianz.ins.model;
 
 public class AuthenticationResponse {
 
-	private final String jwtToken;
+	private  String jwtToken;
 
+	public AuthenticationResponse() {
+		
+	}
 	
 	public AuthenticationResponse(String jwtToken) {
 		this.jwtToken = jwtToken;

@@ -15,15 +15,17 @@ public class EmployeeService {
 	@Autowired
 	EmployeeRepository employeeRepository;
 
-	public void addEmployee(Employee employee) {
+	public Employee addEmployee(Employee employee) {
 
 		Employee saved = employeeRepository.save(employee);
 		System.out.println("saved emp:"+saved);
+		
+		return saved;
 	}
 
 	public Employee getEmployee(String employeeName){
 
-		return employeeRepository.findById(employeeName).get();
+		return employeeRepository.findById(employeeName).get(); 
 	}
 
 	public List<Employee> getAllEmployees(){
