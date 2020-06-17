@@ -87,7 +87,7 @@ public class EmployeeIntegrationTest  {
 			System.out.println("ALREADY HAVE Token");
 		}
 		
-		// Setting the token in header  
+		// Setting the token in header for all API's
 		headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer "+JWTToken);
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
