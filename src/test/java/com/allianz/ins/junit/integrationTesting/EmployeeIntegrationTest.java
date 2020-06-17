@@ -9,6 +9,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -28,17 +29,27 @@ import com.google.gson.Gson;
 
 
 @RunWith(SpringRunner.class)
+
+// It will start our SpringBoot application internally
 @SpringBootTest(classes =SpringBootStarter.class, webEnvironment=WebEnvironment.DEFINED_PORT)
+// To define the execution order of our test cases
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmployeeIntegrationTest  {
 
-	private final static String BASE_URL = "http://localhost:8086/";
-	private final static String AUTHENTICATE = "authenticate";
-	private final static String GET_ALL_EMPLOYEES = "getAllEmployees";
-	private final static String GET_EMPLOYEE = "getEmployee/";
-	private final static String SAVE_EMPLOYEE = "save";
-	private final static String DELETE_EMPLOYEE = "deleteEmployee/";
-	private final static String UPDATE_EMPLOYEE = "updateEmployee";
+	
+	private static String BASE_URL = "http://localhost:";
+	
+	// fetching port from application.properties
+	@Value("${server.port}")
+	private String PORT;
+	
+	//Defining API's url
+	private final static String AUTHENTICATE = "/authenticate";
+	private final static String GET_ALL_EMPLOYEES = "/getAllEmployees";
+	private final static String GET_EMPLOYEE = "/getEmployee/";
+	private final static String SAVE_EMPLOYEE = "/save";
+	private final static String DELETE_EMPLOYEE = "/deleteEmployee/";
+	private final static String UPDATE_EMPLOYEE = "/updateEmployee";
 
 	private static String JWTToken = "";
 
@@ -55,9 +66,14 @@ public class EmployeeIntegrationTest  {
 	@Before
 	public void testgetAuthenticationToken() {
 
+		
+		
 		// We will generate token only once, and use in subsequent calls
 		if(JWTToken == "") {
 			System.out.println("Getting AUTH Token");
+			
+			// Appending the port number in base URL. This will execute only once.
+			BASE_URL = BASE_URL + PORT;
 
 			AuthenticationRequest authenticationRequest = new AuthenticationRequest();
 			authenticationRequest.setUsername("Jatin");
@@ -77,7 +93,7 @@ public class EmployeeIntegrationTest  {
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-
+		System.out.println("BASE_URL: "+BASE_URL);
 	}
 
 	/*
