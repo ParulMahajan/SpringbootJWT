@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
@@ -20,6 +20,8 @@ import com.allianz.ins.model.Employee;
 import com.allianz.ins.service.EmployeeService;
 import com.allianz.ins.util.JWTUtil;
 
+// for direct access, without class name
+import static org.mockito.Mockito.*;
 
 public class EmployeeControllerTest {
 
@@ -47,9 +49,10 @@ public class EmployeeControllerTest {
     	employee.setEmployeename("parul");
     	employee.setPassword("mahajan");
     	
-    	Mockito.when(employeeService.getEmployee(Mockito.anyString())).thenReturn(employee);
+    	// We have imported Mockito class statically, so no need to access using class name
+    	when(employeeService.getEmployee(anyString())).thenReturn(employee);
         
-    	Mockito.when(JWTUtil.generateToken(Mockito.anyString())).thenReturn("randomToken");
+    	when(JWTUtil.generateToken(anyString())).thenReturn("randomToken");
 
         @SuppressWarnings("unchecked")
 		ResponseEntity<AuthenticationResponse> response = (ResponseEntity<AuthenticationResponse>) employeeController.createAuthenticationToken(authenticationRequest);
@@ -74,7 +77,7 @@ public class EmployeeControllerTest {
     	employees.add(employee1);
     	employees.add(employee2);
     	
-    	Mockito.when(employeeService.getAllEmployees()).thenReturn(employees);
+    	when(employeeService.getAllEmployees()).thenReturn(employees);
         
         @SuppressWarnings("unchecked")
 		ResponseEntity<List<Employee>> response = (ResponseEntity<List<Employee>>) employeeController.getAllEmployees();
@@ -93,7 +96,7 @@ public class EmployeeControllerTest {
     	employee.setEmployeename("parul");
     	employee.setPassword("mahajan");
     	
-    	Mockito.when(employeeService.addEmployee(Mockito.any())).thenReturn(employee);
+    	when(employeeService.addEmployee(any())).thenReturn(employee);
         
         @SuppressWarnings("unchecked")
 		ResponseEntity<Employee> response = (ResponseEntity<Employee>) employeeController.saveEmployee(employee);
@@ -111,7 +114,7 @@ public class EmployeeControllerTest {
     	employee.setEmployeename("Jatin");
     	employee.setPassword("kumar");
     	
-    	Mockito.when(employeeService.getEmployee(Mockito.anyString())).thenReturn(employee);
+    	when(employeeService.getEmployee(anyString())).thenReturn(employee);
         
         @SuppressWarnings("unchecked")
 		ResponseEntity<Employee> response = (ResponseEntity<Employee>) employeeController.getEmployee("jatin");
@@ -124,7 +127,7 @@ public class EmployeeControllerTest {
     @Test
     public void testDeleteEmployee() throws Exception {
     	   	
-    	Mockito.when(employeeService.deleteEmployee(Mockito.anyString())).thenReturn(1);
+    	when(employeeService.deleteEmployee(anyString())).thenReturn(1);
         
         @SuppressWarnings("unchecked")
 		ResponseEntity<Integer> response = (ResponseEntity<Integer>) employeeController.deleteEmployee("jatin");
@@ -141,7 +144,7 @@ public class EmployeeControllerTest {
     	employee.setEmployeename("Nitin");
     	employee.setPassword("Thakur");
     	
-    	Mockito.when(employeeService.updateEmployee(Mockito.any())).thenReturn(1);
+    	when(employeeService.updateEmployee(any())).thenReturn(1);
         
         @SuppressWarnings("unchecked")
 		ResponseEntity<Integer> response = (ResponseEntity<Integer>) employeeController.updateEmployee(employee);
