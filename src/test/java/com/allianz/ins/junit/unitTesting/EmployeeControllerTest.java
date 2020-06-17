@@ -1,4 +1,4 @@
-package com.allianz.ins.junit.controller;
+package com.allianz.ins.junit.unitTesting;
 
 import static org.junit.Assert.assertEquals;
 
