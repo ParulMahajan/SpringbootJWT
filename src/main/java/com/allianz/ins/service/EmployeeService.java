@@ -2,23 +2,28 @@ package com.allianz.ins.service;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.allianz.ins.controller.EmployeeController;
 import com.allianz.ins.model.Employee;
 import com.allianz.ins.repository.EmployeeRepository;
 
 @Service
 public class EmployeeService {
 
+	private static final Logger LOGGER = LogManager.getLogger(EmployeeService.class);
+	
 	@Autowired
 	EmployeeRepository employeeRepository;
 
 	public Employee addEmployee(Employee employee) {
 
 		Employee saved = employeeRepository.save(employee);
-		System.out.println("saved emp:"+saved);
+		LOGGER.debug("saved emp:"+saved);
 		
 		return saved;
 	}
@@ -32,14 +37,14 @@ public class EmployeeService {
 
 		List<Employee> employees = (List<Employee>) employeeRepository.findAll();
 
-		System.out.println("employees List:"+employees);
+		LOGGER.debug("employees List:"+employees);
 		return employees;
 	}
 
 	@Transactional
 	public int deleteEmployee(String employeeName) {
 		int status = employeeRepository.deleteEmployee(employeeName);
-		System.out.println("record deleted: "+status);
+		LOGGER.debug("record deleted: "+status);
 
 		return status;
 	}
@@ -48,7 +53,7 @@ public class EmployeeService {
 	public int updateEmployee(Employee employee) {
 
 		int status = employeeRepository.updateEmployee(employee.getEmployeename(), employee.getPassword(), employee.getEmail(), employee.getMobile());
-		System.out.println("record UPDATED: "+status);
+		LOGGER.debug("record UPDATED: "+status);
 
 		return status;
 	}

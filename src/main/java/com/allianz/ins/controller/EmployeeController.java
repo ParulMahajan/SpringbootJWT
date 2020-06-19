@@ -2,6 +2,8 @@ package com.allianz.ins.controller;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ import com.allianz.ins.util.JWTUtil;
 @RestController
 public class EmployeeController {
 
+	private static final Logger LOGGER = LogManager.getLogger(EmployeeController.class);
+	
 	@Autowired
 	EmployeeService employeeService;
 	
@@ -33,7 +37,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
-		System.out.println("Inside authenticate controller");
+		LOGGER.debug("Inside authenticate controller");
 		String token="";
 
 		if(authenticationRequest != null && authenticationRequest.getUsername() != null) {
@@ -60,7 +64,7 @@ public class EmployeeController {
 	        produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> saveEmployee(@RequestBody Employee employee) throws Exception {
 
-		System.out.println("IN: saveEmployee");
+		LOGGER.debug("IN: saveEmployee");
 		
 		Employee savedEmployee = employeeService.addEmployee(employee);
 		return ResponseEntity.ok(savedEmployee);
@@ -70,7 +74,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/getAllEmployees", method = RequestMethod.GET)
 	public ResponseEntity<?> getAllEmployees() throws Exception {
 
-		System.out.println("IN: getAllEmployees");
+		LOGGER.debug("IN: getAllEmployees");
 		
 		List<Employee> employees = employeeService.getAllEmployees();
 		return ResponseEntity.ok(employees);
@@ -79,18 +83,18 @@ public class EmployeeController {
 	@RequestMapping(value = "/getEmployee/{employeeName}", method = RequestMethod.GET)
 	public ResponseEntity<?> getEmployee(@PathVariable String employeeName) throws Exception {
 
-		System.out.println("IN: getEmployee controller: "+employeeName);
+		LOGGER.debug("IN: getEmployee controller: "+employeeName);
 
 		Employee employee = employeeService.getEmployee(employeeName);
 
-		System.out.println("employee: "+employee);
+		LOGGER.debug("employee: "+employee);
 		return ResponseEntity.ok(employee);
 	}
 	
 	@RequestMapping(value = "/deleteEmployee/{employeeName}", method = RequestMethod.GET)
 	public ResponseEntity<?> deleteEmployee(@PathVariable String employeeName) throws Exception {
 
-		System.out.println("IN: deleteEmployee: ");
+		LOGGER.debug("IN: deleteEmployee: ");
 		int status = employeeService.deleteEmployee(employeeName);
 		return ResponseEntity.ok(status);
 	}
@@ -98,7 +102,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/updateEmployee", method = RequestMethod.POST)
 	public ResponseEntity<?> updateEmployee(@RequestBody Employee employee) throws Exception {
  
-		System.out.println("IN: updateEmployee: ");
+		LOGGER.debug("IN: updateEmployee: ");
 		int status = employeeService.updateEmployee(employee);
 		return ResponseEntity.ok(status);
 	}

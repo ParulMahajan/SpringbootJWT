@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -20,6 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.allianz.ins.controller.EmployeeController;
 import com.allianz.ins.model.AuthenticationRequest;
 import com.allianz.ins.model.AuthenticationResponse;
 import com.allianz.ins.model.Employee;
@@ -36,7 +39,7 @@ import com.google.gson.Gson;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmployeeIntegrationTest  {
 
-	
+	private static final Logger LOGGER = LogManager.getLogger(EmployeeIntegrationTest.class);
 	private static String BASE_URL = "http://localhost:";
 	
 	// fetching port from application.properties
@@ -70,7 +73,7 @@ public class EmployeeIntegrationTest  {
 		
 		// We will generate token only once, and use in subsequent calls
 		if(JWTToken == "") {
-			System.out.println("Getting AUTH Token");
+			LOGGER.debug("Getting AUTH Token");
 			
 			// Appending the port number in base URL. This will execute only once.
 			BASE_URL = BASE_URL + PORT;
@@ -82,9 +85,9 @@ public class EmployeeIntegrationTest  {
 			ResponseEntity<AuthenticationResponse> authenticationResponse = restTemplate.postForEntity(BASE_URL + AUTHENTICATE, authenticationRequest,  AuthenticationResponse.class);
 
 			JWTToken  = authenticationResponse.getBody().getJwtToken();
-			System.out.println("authenticationResponse token: "+JWTToken);
+			LOGGER.debug("authenticationResponse token: "+JWTToken);
 		}else {
-			System.out.println("ALREADY HAVE Token");
+			LOGGER.debug("ALREADY HAVE Token");
 		}
 		
 		// Setting the token in header for all API's
@@ -93,7 +96,7 @@ public class EmployeeIntegrationTest  {
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		System.out.println("BASE_URL: "+BASE_URL);
+		LOGGER.debug("BASE_URL: "+BASE_URL);
 	}
 
 	/*
@@ -105,18 +108,18 @@ public class EmployeeIntegrationTest  {
 
 		// Creating url
 		URL = BASE_URL + GET_ALL_EMPLOYEES;
-		System.out.println("URL: "+URL);
+		LOGGER.debug("URL: "+URL);
 
 		entity = new HttpEntity<>("", headers);
 
 		ResponseEntity<Employee[]> response = restTemplate.exchange(URL, HttpMethod.GET, entity, Employee[].class);
 
 		assertEquals(200, response.getStatusCodeValue());
-		System.out.println("ListAll assert success");
+		LOGGER.debug("ListAll assert success");
 
 		// data.sql has 3 entries
 		assertEquals(3, response.getBody().length);
-		Arrays.stream(response.getBody()).forEach( e -> System.out.println(e+"\n"));
+		Arrays.stream(response.getBody()).forEach( e -> LOGGER.debug(e+"\n"));
 
 	}
 
@@ -126,14 +129,14 @@ public class EmployeeIntegrationTest  {
 		// Adding the userName in path param
 		String userName = "Tanuj";
 		URL = BASE_URL + GET_EMPLOYEE + userName;
-		System.out.println("URL: "+URL);
+		LOGGER.debug("URL: "+URL);
 
 		entity = new HttpEntity<>("", headers);
 
 		ResponseEntity<Employee> response = restTemplate.exchange(URL, HttpMethod.GET, entity, Employee.class);
 
 		assertEquals(200, response.getStatusCodeValue());
-		System.out.println("GetEmployee assert success");
+		LOGGER.debug("GetEmployee assert success");
 
 		assertEquals("Mahajan", response.getBody().getPassword());
 	}
@@ -142,7 +145,7 @@ public class EmployeeIntegrationTest  {
 	public void testC_AddEmployee() {
 
 		URL = BASE_URL + SAVE_EMPLOYEE;
-		System.out.println("URL: "+URL);
+		LOGGER.debug("URL: "+URL);
 
 		Employee employee = new Employee();
 		employee.setEmployeename("Nitin");
@@ -158,7 +161,7 @@ public class EmployeeIntegrationTest  {
 		ResponseEntity<Employee> response = restTemplate.exchange(URL, HttpMethod.POST, entity, Employee.class);
 
 		assertEquals(200, response.getStatusCodeValue());
-		System.out.println("AddEmployee assert success");
+		LOGGER.debug("AddEmployee assert success");
 
 		assertEquals("nitgin@gmail.com", response.getBody().getEmail());
 
@@ -168,7 +171,7 @@ public class EmployeeIntegrationTest  {
 	public void testD_UpdateEmployee() {
 
 		URL = BASE_URL + UPDATE_EMPLOYEE;
-		System.out.println("URL: "+URL);
+		LOGGER.debug("URL: "+URL);
 
 		Employee employee = new Employee();
 		employee.setEmployeename("Nitin");
@@ -183,7 +186,7 @@ public class EmployeeIntegrationTest  {
 		ResponseEntity<Integer> response = restTemplate.exchange(URL, HttpMethod.POST, entity, Integer.class);
 
 		assertEquals(200, response.getStatusCodeValue());
-		System.out.println("UpdateEmployee assert success");
+		LOGGER.debug("UpdateEmployee assert success");
 
 		assertEquals(1, response.getBody().intValue());
 
@@ -198,18 +201,18 @@ public class EmployeeIntegrationTest  {
 	public void testE_VerifyNewData() {
 
 		URL = BASE_URL + GET_ALL_EMPLOYEES;
-		System.out.println("URL: "+URL);
+		LOGGER.debug("URL: "+URL);
 
 		entity = new HttpEntity<>("", headers);
 
 		ResponseEntity<Employee[]> response = restTemplate.exchange(URL, HttpMethod.GET, entity, Employee[].class);
 
 		assertEquals(200, response.getStatusCodeValue());
-		System.out.println("VerifyNewData assert success");
+		LOGGER.debug("VerifyNewData assert success");
 
 		
 		assertEquals(4, response.getBody().length);
-		Arrays.stream(response.getBody()).forEach( e -> System.out.println(e+"\n"));
+		Arrays.stream(response.getBody()).forEach( e -> LOGGER.debug(e+"\n"));
 
 	}
 	@Test
@@ -217,14 +220,14 @@ public class EmployeeIntegrationTest  {
 
 		String userName = "Nitin";
 		URL = BASE_URL + DELETE_EMPLOYEE + userName;
-		System.out.println("URL: "+URL);
+		LOGGER.debug("URL: "+URL);
 
 		entity = new HttpEntity<>("", headers);
 
 		ResponseEntity<Integer> response = restTemplate.exchange(URL, HttpMethod.GET, entity, Integer.class);
 
 		assertEquals(200, response.getStatusCodeValue());
-		System.out.println("DeleteEmployee assert success");
+		LOGGER.debug("DeleteEmployee assert success");
 
 		assertEquals(1, response.getBody().intValue());
 	}
