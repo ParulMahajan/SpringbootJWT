@@ -1,16 +1,17 @@
 package com.allianz.ins.junit.integrationTesting;
 
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -20,9 +21,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.allianz.ins.controller.EmployeeController;
 import com.allianz.ins.model.AuthenticationRequest;
 import com.allianz.ins.model.AuthenticationResponse;
 import com.allianz.ins.model.Employee;
@@ -31,12 +31,12 @@ import com.google.gson.Gson;
 
 
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 
 // It will start our SpringBoot application internally
 @SpringBootTest(classes =SpringBootStarter.class, webEnvironment=WebEnvironment.DEFINED_PORT)
 // To define the execution order of our test cases
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 public class EmployeeIntegrationTest  {
 
 	private static final Logger LOGGER = LogManager.getLogger(EmployeeIntegrationTest.class);
@@ -66,7 +66,7 @@ public class EmployeeIntegrationTest  {
 	 * generating the token
 	 * setting the token in header for each call 
 	 */
-	@Before
+	@BeforeEach
 	public void testgetAuthenticationToken() {
 
 		
