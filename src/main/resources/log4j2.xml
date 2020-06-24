@@ -16,7 +16,7 @@
 		syslog.hostname & syslog.port : configured in CMP_GLOBAL.properties
 		env:MODULE          : configured in yaml 
 		app.name.local  & syslog.facility : configured in CMP_MODULE.properties
-		-->
+		
 		<Syslog name="SequentCMPSyslogAppender" host="localhost" port="5120"
 				protocol="TCP" appName="SpringBootJWT" mdcId="mdc"
 				facility="LOCAL7" enterpriseNumber="18060" newLine="true" mdcIncludes="correlationId"
@@ -25,14 +25,14 @@
 				pattern=": { &quot;module&quot;:&quot;SPringBootJWT&quot;, &quot;timeStamp&quot;:&quot;%d{MMM dd HH:mm:ss}&quot;, &quot;containerId&quot;:&quot;localhost&quot;,  &quot;correlationId&quot;:&quot;%X{correlationId}&quot;, &quot;level&quot;:&quot;%p&quot;, &quot;logger&quot;:&quot;%c{1.}&quot;, &quot;message&quot;:&quot;%m&quot;, &quot;exception&quot;:&quot;%exception&quot; }%n"
 			/>
 		</Syslog>
- 
+ 	-->
 	</Appenders>
 
 	<Loggers>
 
 		<Root level="info">
 			<AppenderRef ref="Console" />
-		  	<AppenderRef ref="SequentCMPSyslogAppender" />  
+		<!--   	<AppenderRef ref="SequentCMPSyslogAppender" />   -->
 		</Root>
 
 		<Logger name="com.allianz" level="debug" />
