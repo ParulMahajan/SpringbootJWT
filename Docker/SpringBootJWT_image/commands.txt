@@ -1,0 +1,11 @@
+ sudo docker run -p 8084:8086 SpringbootJWT:latest /bin/bash
+ 
+sudo sysctl -w vm.max_map_count=262144
+
+sudo docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sebp/elk
+
+PORT USED BY : Get-Process -Id (Get-NetTCPConnection -LocalPort 8085).OwningProcess
+
+sudo docker run -d -p 8080:8080 -p 50000:50000 -v /var/jenkins:/var/jenkins_home jenkins/jenkins:latest
+ 
+ 
