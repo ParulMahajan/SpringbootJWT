@@ -1,0 +1,1 @@
+sudo docker build --tag="mahajan777/base_image:latest" .

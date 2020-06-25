@@ -1,0 +1,6 @@
+[dvd-server]
+name=Red Hat Enterprise Linux 7.*
+gpgcheck=0
+baseurl=http://192.168.150.6/linux/RHEL/RHEL7
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+enabled=1
