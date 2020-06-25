@@ -1,1 +1,1 @@
-sudo docker build --tag="mahajan777/SpringbootJWT:latest" .
+docker build --tag="mahajan777/springboot_jwt:latest" .

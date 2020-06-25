@@ -1,3 +1,6 @@
+ To add user to docker group
+ sudo usermod -aG docker $USER
+ 
  sudo docker run -p 8084:8086 SpringbootJWT:latest /bin/bash
  
 sudo sysctl -w vm.max_map_count=262144
