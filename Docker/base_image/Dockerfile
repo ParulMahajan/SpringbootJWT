@@ -4,7 +4,7 @@ FROM centos:latest
 MAINTAINER Parul  Mahajan
 
 # Update Software repository
-#RUN  yum check-update
+#cRUN  yum check-update
 
 #Java installation
 #with unlimited strength JCE policy.
