@@ -13,8 +13,6 @@ pipeline {
             // Get some code from a GitHub repository
             git 'https://github.com/ParulMahajan/SpringbootJWT'
 
-			// Delete old Images
-			sh "docker image prune -a"
 			
 			// Create Base Imge
 			sh 'docker build --tag="mahajan777/base_image:latest" /var/lib/jenkins/workspace/DockerPipeline/Docker/base_image'
