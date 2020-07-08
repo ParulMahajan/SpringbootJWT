@@ -11,9 +11,10 @@ ENV KAFKA_VERSION=2.5.0 SCALA_VERSION=2.12
 
 #Install Kafka
 COPY artifacts/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz /tmp/kafka.tgz
-RUN tar xfz /tmp/kafka.tgz -C /apps \
-    && rm /tmp/kafka.tgz \
-    && mv /apps/kafka_${SCALA_VERSION}-${KAFKA_VERSION} /apps/kafka
+RUN mkdir -p /apps
+RUN tar xfz /tmp/kafka.tgz -C /apps
+RUN rm /tmp/kafka.tgz
+RUN mv /apps/kafka_${SCALA_VERSION}-${KAFKA_VERSION} /apps/kafka
 
 #COPY artifacts/server.properties /apps/kafka/config/server.properties
 #RUN ls -l /apps/kafka/config/
@@ -22,8 +23,8 @@ RUN tar xfz /tmp/kafka.tgz -C /apps \
 #Set access rights to regular user
 #/var/log/supervisord/ \
 RUN mkdir -p /tmp/zookeeper \
-			/tmp/kafka-logs \
-			/apps/kafka/logs \
+			 /tmp/kafka-logs \
+			/apps/kafka/logs
 #	&& chmod -R 755 /var/log/supervisord/ \
 #	&& chown -R sequser:seqgrp /apps/kafka \
 #			    /var/log/supervisord/ \
