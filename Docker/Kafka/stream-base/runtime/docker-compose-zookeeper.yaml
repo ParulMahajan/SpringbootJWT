@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  zookeeper:
+    image: mahajan777/kafka-zookeeper:latest
+    ports:
+      - 2181:2181
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]

@@ -1,0 +1,23 @@
+version: "3.1"
+
+services:
+  kafka-consumer:
+    image: ${HOSTNAME}:5000/cmp-kafka-consumer:${image_tag}
+    environment:
+      - ZOOKEEPER=${HOSTNAME}:32829
+      - KAFKA_NODE=${HOSTNAME}:32879
+      - CMP_REGISTRY_HOSTNAME=${HOSTNAME}
+      - MODULE=CMP_STREAMING
+      - TZ=${TZ-`readlink /etc/localtime | sed -e 's,../usr/share/zoneinfo/,,'`}
+    secrets:
+      - CMP_STREAMING
+    volumes:
+      - /var/log/sequent-servers/cmp-streaming/consumer:/var/log/sequent-servers/cmp-streaming/consumer
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+secrets:
+  CMP_STREAMING:
+    external: true
