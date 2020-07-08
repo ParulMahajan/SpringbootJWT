@@ -38,6 +38,12 @@ RUN ls -l /tmp
 #Define work directory of the container
 WORKDIR /apps/kafka
 
+# Expose ZooKeeper
+EXPOSE 2181
+
+# Expose Kafka
+EXPOSE 9092
+
 #switch user
 #USER sequser
 
