@@ -23,11 +23,27 @@ pipeline {
          }
       }
       
-      stage('Build Kafka Base Image') {
+      stage('Build Streaming Base Image') {
          steps {
             
-			// Create Kafka Base Imge
+			// Create Kafka Base Image
 			sh 'docker build --tag="mahajan777/streaming-base:latest"  /var/lib/jenkins/workspace/DockerPipeline/Docker/Kafka/stream-base'
+         }
+      }
+      
+      stage('Build Zookeper Image') {
+         steps {
+            
+			// Create zookeeper Image
+			sh 'docker build --tag="mahajan777/kafka-zookeeper:latest"  --no-cache="true" --rm=true /var/lib/jenkins/workspace/DockerPipeline/Docker/Kafka/zookeper'
+         }
+      }
+      
+      stage('Build Kafka Image') {
+         steps {
+            
+			// Create Kafka Node Image
+			sh 'docker build --tag="mahajan777/kafka-node:latest"  --no-cache="true" --rm=true /var/lib/jenkins/workspace/DockerPipeline/Docker/Kafka/kafkaNode'
          }
       }
        
