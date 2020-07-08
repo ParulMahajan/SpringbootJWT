@@ -1,5 +1,5 @@
 
-def PipelineBasePath = '/var/lib/jenkins/workspace/DockerPipeline/Docker'
+def PipelineBasePath = "/var/lib/jenkins/workspace/DockerPipeline/Docker"
 
 
 pipeline {
