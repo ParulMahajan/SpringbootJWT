@@ -38,10 +38,10 @@ pipeline {
             sh "mvn clean package -Dmaven.test.skip=true"
 
             // Copy JAR to Docker artifact
-            sh "cp /var/lib/jenkins/workspace/DockerPipeline/target/SpringbootJWT-latest.jar "${PipelineBasePath}"/SpringBootJWT_image/artifacts"
+            sh "cp /var/lib/jenkins/workspace/DockerPipeline/target/SpringbootJWT-latest.jar '${PipelineBasePath}'/SpringBootJWT_image/artifacts"
             
             // Create SpringBoot Docker Image
-            sh 'docker build --tag="mahajan777/springboot_jwt:latest" ${PipelineBasePath}/SpringBootJWT_image'
+            sh 'docker build --tag="mahajan777/springboot_jwt:latest" "${PipelineBasePath}"/SpringBootJWT_image'
             
             // remove untagged none images
             sh 'docker rmi $(docker images -f dangling=true -q)'
