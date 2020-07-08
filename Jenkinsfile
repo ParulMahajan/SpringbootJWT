@@ -1,5 +1,5 @@
 
-def PipelineBasePath = "/var/lib/jenkins/workspace/DockerPipeline/Docker"
+def PipelineBasePath = '/var/lib/jenkins/workspace/DockerPipeline/Docker'
 
 
 pipeline {
@@ -19,7 +19,7 @@ pipeline {
 
 			
 			// Create Base Imge
-			sh 'docker build --tag="mahajan777/base_image:latest" ${PipelineBasePath}/base_image'
+			sh 'docker build --tag="mahajan777/base_image:latest" "${PipelineBasePath}"/base_image'
          }
       }
       
@@ -27,7 +27,7 @@ pipeline {
          steps {
             
 			// Create Kafka Base Imge
-			sh 'docker build --tag="mahajan777/streaming-base:latest"  ${PipelineBasePath}/Kafka/stream-base'
+			sh 'docker build --tag="mahajan777/streaming-base:latest"  "${PipelineBasePath}"/Kafka/stream-base'
          }
       }
        
@@ -38,7 +38,7 @@ pipeline {
             sh "mvn clean package -Dmaven.test.skip=true"
 
             // Copy JAR to Docker artifact
-            sh "cp /var/lib/jenkins/workspace/DockerPipeline/target/SpringbootJWT-latest.jar ${PipelineBasePath}/SpringBootJWT_image/artifacts"
+            sh "cp /var/lib/jenkins/workspace/DockerPipeline/target/SpringbootJWT-latest.jar "${PipelineBasePath}"/SpringBootJWT_image/artifacts"
             
             // Create SpringBoot Docker Image
             sh 'docker build --tag="mahajan777/springboot_jwt:latest" ${PipelineBasePath}/SpringBootJWT_image'
