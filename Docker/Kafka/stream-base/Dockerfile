@@ -17,8 +17,8 @@ RUN rm /tmp/kafka.tgz
 RUN mv /apps/kafka_${SCALA_VERSION}-${KAFKA_VERSION} /apps/kafka
 
 #COPY artifacts/server.properties /apps/kafka/config/server.properties
-#RUN ls -l /apps/kafka/config/
-#RUN cat /apps/kafka/config/server.properties
+RUN ls -l /apps/kafka/config/
+RUN cat /apps/kafka/config/server.properties
 
 #Set access rights to regular user
 #/var/log/supervisord/ \
