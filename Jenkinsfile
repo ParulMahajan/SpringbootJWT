@@ -60,9 +60,8 @@ pipeline {
             sh 'docker build --tag="mahajan777/springboot_jwt:latest" /var/lib/jenkins/workspace/DockerPipeline/Docker/SpringBootJWT_image'
             
             // remove untagged none images
-            sh 'docker rmi $(docker images -f dangling=true -q)'
+            sh 'docker rmi -f $(docker images -f dangling=true -q)'
             
-            sh 'chmod 755 runtime/*'
          }
       }
    }
