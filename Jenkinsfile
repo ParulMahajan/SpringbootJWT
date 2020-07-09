@@ -22,7 +22,7 @@ pipeline {
 
 			
 			// Create Base Imge
-			sh 'docker build --tag="mahajan777/base_image:latest"  --no-cache="true" --rm=true /var/lib/jenkins/workspace/DockerPipeline/Docker/base_image'
+			sh 'docker build --tag="mahajan777/base_image:latest"  /var/lib/jenkins/workspace/DockerPipeline/Docker/base_image'
          }
       }
       
@@ -30,7 +30,7 @@ pipeline {
          steps {
             
 			// Create Kafka Base Image
-			sh 'docker build --tag="mahajan777/streaming-base:latest"  --no-cache="true" --rm=true /var/lib/jenkins/workspace/DockerPipeline/Docker/Kafka/stream-base'
+			sh 'docker build --tag="mahajan777/streaming-base:latest"   /var/lib/jenkins/workspace/DockerPipeline/Docker/Kafka/stream-base'
          }
       }
       
@@ -65,7 +65,6 @@ pipeline {
             // remove untagged none images
             sh 'docker rmi -f $(docker images -f dangling=true -q)'
             
-              sh 'docker system prune -all'
          }
       }
    }
