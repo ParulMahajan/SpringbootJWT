@@ -6,5 +6,5 @@ MAINTAINER Parul  Mahajan
 EXPOSE 9092
 USER root
 
-
-RUN /apps/kafka/bin/kafka-server-start.sh
+ENTRYPOINT ["/apps/kafka/bin/kafka-server-start.sh"]
+#RUN /apps/kafka/bin/kafka-server-start.sh
