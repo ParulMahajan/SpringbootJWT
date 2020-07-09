@@ -6,5 +6,7 @@ MAINTAINER Parul  Mahajan
 EXPOSE 2181
 USER root
 
-ENTRYPOINT ["/apps/kafka/bin/zookeeper-server-start.sh /apps/kafka/config/server.properties"]
+RUN ls -l /apps/kafka/config/
+
+ENTRYPOINT ["/apps/kafka/bin/zookeeper-server-start.sh /apps/kafka/config/zookeeper.properties"]
 #RUN /apps/kafka/bin/zookeeper-server-start.sh
