@@ -17,15 +17,15 @@ RUN rm /tmp/kafka.tgz
 RUN mv /apps/kafka_${SCALA_VERSION}-${KAFKA_VERSION} /apps/kafka
 
 #COPY artifacts/server.properties /apps/kafka/config/server.properties
-RUN ls -l /apps/kafka/config/
-RUN cat /apps/kafka/config/server.properties
+
+#RUN cat /apps/kafka/config/server.properties
 
 #Set access rights to regular user
 #/var/log/supervisord/ \
 RUN mkdir -p /tmp/zookeeper \
 			 /tmp/kafka-logs \
 			/apps/kafka/logs \
-			&& chmod -R 755 /apps/kafka
+			&& chmod -R 755 /apps/kafka/*
 #	&& chmod -R 755 /var/log/supervisord/ \
 #	&& chown -R sequser:seqgrp /apps/kafka \
 #			    /var/log/supervisord/ \
@@ -34,7 +34,9 @@ RUN mkdir -p /tmp/zookeeper \
 #					/apps/kafka/logs \
 #	&& chmod -R 755 /apps/kafka
 
-RUN ls -l /tmp
+RUN ls -l /apps/kafka/config/
+
+#RUN ls -l /tmp
 
 #Define work directory of the container
 WORKDIR /apps/kafka
