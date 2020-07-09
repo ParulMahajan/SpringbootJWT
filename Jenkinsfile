@@ -61,6 +61,8 @@ pipeline {
             
             // remove untagged none images
             sh 'docker rmi $(docker images -f dangling=true -q)'
+            
+            sh 'sudo chmod 755 runtime/*'
          }
       }
    }
