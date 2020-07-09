@@ -6,6 +6,8 @@ MAINTAINER Parul  Mahajan
 EXPOSE 2181
 USER root
 
+COPY artifacts/zookeeper.properties /apps/kafka/config/zookeeper.properties
+
 RUN ls -l /apps/kafka/bin
 RUN ls -l /apps/kafka/config/
 
