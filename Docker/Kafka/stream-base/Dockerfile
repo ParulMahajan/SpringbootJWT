@@ -24,7 +24,8 @@ RUN mv /apps/kafka_${SCALA_VERSION}-${KAFKA_VERSION} /apps/kafka
 #/var/log/supervisord/ \
 RUN mkdir -p /tmp/zookeeper \
 			 /tmp/kafka-logs \
-			/apps/kafka/logs
+			/apps/kafka/logs \
+			&& chmod -R 755 /apps/kafka
 #	&& chmod -R 755 /var/log/supervisord/ \
 #	&& chown -R sequser:seqgrp /apps/kafka \
 #			    /var/log/supervisord/ \

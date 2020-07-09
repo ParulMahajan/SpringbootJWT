@@ -14,12 +14,15 @@ pipeline {
        
        stage('Build Base Image') {
          steps {
+         
+           
+             
             // Get some code from a GitHub repository
             git 'https://github.com/ParulMahajan/SpringbootJWT'
 
 			
 			// Create Base Imge
-			sh 'docker build --tag="mahajan777/base_image:latest" /var/lib/jenkins/workspace/DockerPipeline/Docker/base_image'
+			sh 'docker build --tag="mahajan777/base_image:latest"  --no-cache="true" --rm=true /var/lib/jenkins/workspace/DockerPipeline/Docker/base_image'
          }
       }
       
@@ -27,7 +30,7 @@ pipeline {
          steps {
             
 			// Create Kafka Base Image
-			sh 'docker build --tag="mahajan777/streaming-base:latest"  /var/lib/jenkins/workspace/DockerPipeline/Docker/Kafka/stream-base'
+			sh 'docker build --tag="mahajan777/streaming-base:latest"  --no-cache="true" --rm=true /var/lib/jenkins/workspace/DockerPipeline/Docker/Kafka/stream-base'
          }
       }
       
@@ -57,11 +60,12 @@ pipeline {
             sh "cp /var/lib/jenkins/workspace/DockerPipeline/target/SpringbootJWT-latest.jar /var/lib/jenkins/workspace/DockerPipeline/Docker/SpringBootJWT_image/artifacts"
             
             // Create SpringBoot Docker Image
-            sh 'docker build --tag="mahajan777/springboot_jwt:latest" /var/lib/jenkins/workspace/DockerPipeline/Docker/SpringBootJWT_image'
+            sh 'docker build --tag="mahajan777/springboot_jwt:latest"  --no-cache="true" --rm=true /var/lib/jenkins/workspace/DockerPipeline/Docker/SpringBootJWT_image'
             
             // remove untagged none images
             sh 'docker rmi -f $(docker images -f dangling=true -q)'
             
+              sh 'docker system prune -all'
          }
       }
    }
