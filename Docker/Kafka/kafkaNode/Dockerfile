@@ -7,4 +7,4 @@ EXPOSE 9092
 USER root
 
 
-CMD /apps/kafka/bin/kafka-server-start.sh
+RUN /apps/kafka/bin/kafka-server-start.sh

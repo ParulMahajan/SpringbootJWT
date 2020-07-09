@@ -7,4 +7,4 @@ EXPOSE 2181
 USER root
 
 
-CMD /apps/kafka/bin/zookeeper-server-start.sh
+RUN /apps/kafka/bin/zookeeper-server-start.sh
