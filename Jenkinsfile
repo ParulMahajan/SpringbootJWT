@@ -65,6 +65,7 @@ pipeline {
             // remove untagged none images
             sh 'docker rmi -f $(docker images -f dangling=true -q)'
             
+            sh 'docker system prune --force'
          }
       }
    }
