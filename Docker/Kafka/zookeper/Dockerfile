@@ -16,7 +16,7 @@ RUN cat /apps/kafka/config/zookeeper.properties
 
 RUN pwd
 
-ENTRYPOINT ["/apps/kafka/bin/zookeeper-server-start.sh -daemon /apps/kafka/config/zookeeper.properties"]
-#ENTRYPOINT ["/apps/kafka/bin/zookeeper-server-start.sh"]
+#ENTRYPOINT ["/apps/kafka/bin/zookeeper-server-start.sh -daemon /apps/kafka/config/zookeeper.properties"]
+ENTRYPOINT ["/apps/kafka/bin/zookeeper-server-start.sh /apps/kafka/config/zookeeper.properties"]
 #RUN /apps/kafka/bin/zookeeper-server-start.sh
 #CMD /apps/kafka/bin/zookeeper-server-start.sh -daemon /apps/kafka/config/zookeeper.properties
