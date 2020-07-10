@@ -36,7 +36,7 @@ RUN mkdir -p /tmp/zookeeper \
 #					/apps/kafka/logs \
 #	&& chmod -R 755 /apps/kafka
 
-RUN ls -l /apps/kafka/config/
+#RUN ls -l /apps/kafka/config/
 
 #RUN ls -l /tmp
 

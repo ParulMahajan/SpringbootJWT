@@ -6,7 +6,7 @@ MAINTAINER Parul  Mahajan
 EXPOSE 9092
 USER root
 
-COPY artifacts/server.properties /apps/kafka/config/zookeeper.properties
+COPY artifacts/server.properties /apps/kafka/config/server.properties
 
 RUN chmod -R 755 /apps/kafka/
 
