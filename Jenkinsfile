@@ -66,6 +66,9 @@ pipeline {
             sh 'docker rmi -f $(docker images -f dangling=true -q)'
             
             sh 'docker system prune --force'
+            
+            // Genarate Network
+            sh 'docker network create mynetwork'
          }
       }
    }
