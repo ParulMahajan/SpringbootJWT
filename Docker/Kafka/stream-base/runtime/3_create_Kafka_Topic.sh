@@ -4,3 +4,4 @@
 
 
 /apps/kafka/bin/kafka-console-producer.sh --broker-list kafkaNode:9092 --topic myKafka
+
