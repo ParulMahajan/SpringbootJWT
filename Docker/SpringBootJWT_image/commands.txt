@@ -1,7 +1,7 @@
  To add user to docker group
  sudo usermod -aG docker $USER
  
- sudo docker run -p 8084:8086 SpringbootJWT:latest /bin/bash
+ docker run -p 8084:8086 mahajan777/springboot_jwt:latest
  
 sudo sysctl -w vm.max_map_count=262144
 
@@ -11,4 +11,6 @@ PORT USED BY : Get-Process -Id (Get-NetTCPConnection -LocalPort 8085).OwningProc
 
 sudo docker run -d -p 8080:8080 -p 50000:50000 -v /var/jenkins:/var/jenkins_home jenkins/jenkins:latest
  
+ 
+  docker system prune --force
  

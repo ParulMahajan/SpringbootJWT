@@ -1,0 +1,1 @@
+ docker run --name springBoot -d -p 8084:8086 mahajan777/springboot_jwt:latest
