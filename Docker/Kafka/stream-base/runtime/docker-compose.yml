@@ -1,0 +1,46 @@
+version: "2"
+services:
+  kafkaNode1:
+    container_name: 'kafkaNode1'
+    image: "mahajan777/kafka-node:latest"
+    networks:
+    - mynetwork
+    ports:
+    - "9092:9092"
+    volumes:
+    - "/var/lib/jenkins/workspace/DockerPipeline/Docker/Kafka/kafkaNode/artifacts/server.properties:/apps/kafka/config/server.properties"
+  kafkaNode2:
+    container_name: 'kafkaNode2'
+    image: "mahajan777/kafka-node:latest"
+    networks:
+    - mynetwork
+    ports:
+    - "9093:9092"
+    volumes:
+    - "/var/lib/jenkins/workspace/DockerPipeline/Docker/Kafka/kafkaNode/artifacts/server1.properties:/apps/kafka/config/server.properties"
+  kafkaNode3:
+    container_name: 'kafkaNode3'
+    image: "mahajan777/kafka-node:latest"
+    networks:
+    - mynetwork
+    ports:
+    - "9094:9092"
+    volumes:
+    - "/var/lib/jenkins/workspace/DockerPipeline/Docker/Kafka/kafkaNode/artifacts/server2.properties:/apps/kafka/config/server.properties"
+  springBoot:
+    container_name: 'springBoot'
+    image: "mahajan777/springboot_jwt:latest"
+    networks:
+    - mynetwork
+    ports:
+    - "8084:8086"
+  zookeeper:
+    container_name: 'zookeper'
+    image: "mahajan777/kafka-zookeeper:latest"
+    networks:
+    - mynetwork
+    ports:
+    - "2181:2181"
+networks:
+  mynetwork:
+    external: true
