@@ -24,7 +24,10 @@ RUN cat /apps/kafka/config/consumer.properties
 #Set access rights to regular user
 #/var/log/supervisord/ \
 RUN mkdir -p /tmp/zookeeper \
-			 /tmp/kafka-logs \
+			 /tmp/kafka-logs/server1 \
+			 /tmp/kafka-logs/server2 \
+			 /tmp/kafka-logs/server3 \
+			 /tmp/kafka-logs/zookeper \
 			/apps/kafka/logs \
 			&& chmod -R 755 /apps/kafka/ \
 			/tmp/zookeeper \
