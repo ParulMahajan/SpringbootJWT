@@ -17,7 +17,7 @@ RUN rm /tmp/kafka.tgz
 RUN mv /apps/kafka_${SCALA_VERSION}-${KAFKA_VERSION} /apps/kafka
 
 #COPY artifacts/server.properties /apps/kafka/config/server.properties
-COPY artifacts/consumer.properties /apps/kafka/config/consumer.properties
+#COPY artifacts/consumer.properties /apps/kafka/config/consumer.properties
 #RUN cat /apps/kafka/config/server.properties
 RUN cat /apps/kafka/config/consumer.properties
 
