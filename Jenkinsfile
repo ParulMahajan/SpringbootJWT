@@ -68,7 +68,7 @@ pipeline {
            
             
             // Genarate Network
-           # sh 'docker network create mynetwork'
+           // sh 'docker network create mynetwork'
          }
       }
    }
