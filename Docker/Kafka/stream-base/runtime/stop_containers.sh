@@ -1,6 +1,6 @@
 docker stop zookeper
 
-docker stop kafkaNod1
+docker stop kafkaNode1
 
 docker stop kafkaNode2
 
