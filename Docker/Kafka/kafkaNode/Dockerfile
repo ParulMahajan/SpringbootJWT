@@ -4,6 +4,8 @@ MAINTAINER Parul  Mahajan
 
 # Expose Kafka
 EXPOSE 9092
+EXPOSE 9093
+EXPOSE 9094
 USER root
 
 COPY artifacts/server.properties /apps/kafka/config/server.properties
